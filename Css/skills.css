@@ -1,0 +1,166 @@
+body{
+    background-image: linear-gradient(to bottom, rgb(212, 178, 183),rgb(194, 120, 133),rgb(197, 171, 175));
+}
+header{
+    text-align: center;
+    margin-top: 0.2em;
+    margin-bottom: 0.5em;
+    padding: 0.05em;
+    /* background-color: rgb(166, 138, 161); */
+    /* background-image: linear-gradient(to bottom right, rgba(223, 207, 220, 1)); */
+  
+}
+h1{
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2em;
+    letter-spacing: 0.04em;
+    padding: 0.2em;
+}
+nav{
+    font-size: 2em;
+    color: black;
+    font-weight: bold;
+    line-height: 1.25em;
+    letter-spacing: 0.08em;
+    margin-top: 0.3em;
+    margin-bottom: 0.04em;
+    
+    
+}
+.links{
+    color: black;
+    padding: 0.8em;
+    text-decoration: none;
+
+}
+.links:hover{
+    color: rgb(245, 138, 154);
+
+
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+.fade-in-image{
+     animation: fadeIn 5s; 
+        }  
+hr{
+    color: rgb(59, 15, 22);
+    size: 5px solid;
+}
+
+.section{
+    display: flex;
+    justify-content: center;
+    margin-top: 5em;
+    margin-left: 15em;
+
+
+}
+#image{
+    max-width: 500px;
+}
+#content{
+    font-size: 2.8em;
+    font-weight: normal;
+    line-height: 1.25em;
+    letter-spacing: 0.04em;
+    margin-top: 0.1em;
+    margin-left: 3em;
+    margin-right: 1.5em;
+}
+@keyframes slide-up{
+    from{
+        opacity: 0.2;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.text-box{
+    animation: slide-up 2s;
+}
+
+
+.media{
+    font-size: 1.6em;
+    text-align: center;
+
+    padding: 0.3em;
+}
+.fa-brands{
+    color: black;
+    padding: 0.6em;
+
+}
+.fa-brands:hover{
+    color: rgb(245, 138, 154);
+}
+#copyrights{
+    text-align: center;
+    font-size: 1.30em;
+    color: black;
+}
+.logos{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+}
+.logo{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+}
+#html{
+    width: 10%;
+    height: 10%;
+}
+#css{
+    width: 15%;
+    height: 15%;
+
+}
+#js{
+    width: 15%;
+    height: 15%;
+}
+#java{
+    width: 12%;
+    height: 12%;
+}
+#python{
+    width: 25%;
+    height: 25%;
+}
+#mysql{
+    width: 22%;
+    height: 22%;
+}
+#bt{
+    width: 12%;
+    height: 12%;
+}
+#mt{
+    width: 15%;
+    height: 15%;
+}
+#azure{
+    width: 20%;
+    height: 20%;
+    margin-top: 4em;
+   
+}
+footer{    margin-right: 10%;
+}

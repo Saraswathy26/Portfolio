@@ -1,0 +1,42 @@
+.section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 4%;
+    margin-right: 10% ;
+}
+.profile{
+    font-size: 1.76em;
+
+}
+.details{
+    margin-top: 1.50%;
+    padding: 1.50em;
+    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+#htc{
+    font-weight: bold;
+    font-size: 1.25em;
+}
+#sara{
+    font-weight: bold;
+}
+#btn{
+    font-size: 1.25em;
+    border-radius: 2px;
+    border-color: black;
+    width: 30%;
+    height: 20%;
+    background-color:mistyrose;
+}
+#cvbtn{
+    width: 18%;
+    height: 10%;
+    background-color: mistyrose;
+}
+.labels{
+    background-color:mistyrose;
+}

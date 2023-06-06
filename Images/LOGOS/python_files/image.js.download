@@ -1,0 +1,83 @@
+
+/**********************************************************************************
+|
+|	On click favorite
+|
+**********************************************************************************/
+
+$(document).on('click','.fav-btn',function(e) {
+	e.preventDefault();
+	if (!navigator.cookieEnabled) {
+		alert('Please enable browser cookies to favorite photos.');
+		return false;
+	}
+	if ($(this).hasClass('loading')) {
+		return false;
+	}
+	var el = $(this);
+	var imgId = $(this).attr('data-imgid');
+	favoriteSinglePhoto(el,imgId);
+	return false;
+});
+
+/**********************************************************************************
+|
+|	Favorite function
+|
+**********************************************************************************/
+
+function favoriteSinglePhoto(el,imgId) {
+
+	el.addClass('disabled');
+
+	var loadingCircle = setTimeout(function(){
+		el.addClass('loading');
+	}, 500);
+
+	var addFav = true;
+
+	if (el.hasClass('faved')) {
+		addFav = false;
+	}
+
+	var favData = {
+		addAction: addFav,
+		imgId : imgId,
+	}
+
+	var ajaxPost = $.ajax({
+		type: 'POST',
+		url: '/api-favorite',
+		data: $.param(favData),
+		dataType: 'json',
+		success:function(ret) {
+			var code = ret.code ;
+			var msg = ret.message ;
+			if(code == '0000') {
+				el.toggleClass('faved');
+				clearTimeout(loadingCircle);
+				el.removeClass('loading');
+				el.removeClass('disabled');
+			}else {
+				clearTimeout(loadingCircle);
+				el.removeClass('loading');
+				el.removeClass('disabled');	
+				var errorMsg = 'Please log in to remove photos from your favorites.';
+				if (addFav) {
+					errorMsg = 'Please log in to add photos to your favorites.';
+				}
+				$('#login-signup-modal .alert.error-msg').remove();
+				$('#login-tab h3').after('<div class="alert alert-danger error-msg">' + errorMsg + '</div>');
+				$('#login-signup-modal .tab-pane').removeClass('active');
+				$('#login-signup-modal #login-tab').addClass('active');
+				$('#login-signup-modal').modal('show');				
+			}
+		},
+		error:function(error) {
+			clearTimeout(loadingCircle);
+			el.removeClass('loading');
+			el.removeClass('disabled');			
+			_showReqFailModal();
+		}		
+	});
+}

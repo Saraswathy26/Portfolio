@@ -1,0 +1,392 @@
+/**********************************************************************************
+|
+|	Global vars
+|
+**********************************************************************************/
+
+var _loadingPhotos = false;
+var _photosGrid = false;
+
+/**********************************************************************************
+|
+|	AJAX request fail modal
+|
+**********************************************************************************/
+
+function _showReqFailModal() {
+	$('#ajaxFailModal').modal('show');
+}
+
+/**********************************************************************************
+|
+|	Format form error messages
+|
+**********************************************************************************/
+
+function _formatErrorMsg(errors) {
+	var errorMsgs = '';
+	for (var i = 0; i < errors.length; i++) {
+		errorMsgs += '<div>' + errors[i].msg + '</div>';
+	}
+	return errorMsgs
+}
+
+/**********************************************************************************
+|
+|	Active tab on nav login or sign up
+|
+**********************************************************************************/
+
+$('[data-target="#login-signup-modal"]').on('click',function() {
+	$('#login-signup-modal .tab-pane').removeClass('active');
+	var tab = $(this).attr('data-tab-select');
+	$('#login-signup-modal #' + tab).addClass('active');
+});
+
+/**********************************************************************************
+|
+|	On login form submit
+|
+**********************************************************************************/
+
+$('#login-form').submit(function(e) {
+	$('#login-form .btn-primary').button('loading');
+	$('#login-tab .error-msg').remove();
+	e.preventDefault();
+	loginUser();
+	return false;
+});
+
+function loginUser() {
+
+	if (!navigator.cookieEnabled) {
+		$('#login-tab h3').after('<div class="alert alert-danger error-msg">Please enable browser cookies to log in.</div>');
+		$('#login-form .btn-primary').button('reset');
+		return false;
+	}
+
+	var ajaxPost = $.ajax({
+		type: 'POST',
+		url: '/login',
+		data: $('#login-form').serialize(),
+		dataType: 'json',
+		success:function(ret) {
+			var code = ret.code ;
+			var msg = ret.message ;
+			if(code == '0000') {
+				window.location.href = '/favorites';
+			}else {
+				$('#login-form .btn-primary').button('reset');
+				$('#login-tab h3').after('<div class="alert alert-danger error-msg"><div>' + msg + '</div></div>');			
+			}
+		},
+		error:function(error) {
+			$('#login-form .btn-primary').button('reset');
+			_showReqFailModal();
+		}		
+	});
+}
+
+/**********************************************************************************
+|
+|	On signup form submit
+|
+**********************************************************************************/
+
+$('#signup-form').submit(function(e) {
+	$('#signup-form .btn-primary').button('loading');
+	$('#signup-tab .error-msg').remove();
+	e.preventDefault();
+	signupUser();
+	return false;
+});
+
+function signupUser() {
+
+	if (!navigator.cookieEnabled) {
+		$('#signup-tab h3').after('<div class="alert alert-danger error-msg">Please enable browser cookies to sign up.</div>');
+		$('#signup-form .btn-primary').button('reset');
+		return false;
+	}
+
+	var ajaxPost = $.ajax({
+		type: 'POST',
+		url: '/signup',
+		data: $('#signup-form').serialize(),
+		dataType: 'json',
+		success:function(ret) {
+			var code = ret.code ;
+			var msg = ret.message ;
+			if(code == '0000') {
+				$('#signup-form .btn-primary').button('reset');
+				$('#signup-tab .confirm-email .success-msg').html(msg);
+				$('#signup-tab .create-acct').hide();
+				$('#signup-tab .confirm-email').show();
+			}else {
+				$('#signup-form .btn-primary').button('reset');
+				$('#signup-tab h3').after('<div class="alert alert-danger error-msg"><div>' + msg + '</div></div>');			
+			}
+		},
+		error:function(error) {
+			$('#signup-form .btn-primary').button('reset');
+			_showReqFailModal();
+		}
+	});
+}
+
+/**********************************************************************************
+|
+|	On forgot password form submit
+|
+**********************************************************************************/
+
+$('#forgot-form').submit(function(e) {
+	$('#forgot-form .btn-primary').button('loading');
+	$('#forgot-tab .error-msg').remove();
+	e.preventDefault();
+	forgotPassword();
+	return false;
+});
+
+function forgotPassword() {
+
+	var ajaxPost = $.ajax({
+		type: 'POST',
+		url: '/forgotpassword',
+		data: $('#forgot-form').serialize(),
+		dataType: 'json',
+		success:function(ret) {
+			var code = ret.code ;
+			var msg = ret.message ;
+			if(code == '0000') {
+				$('#forgot-form .btn-primary').button('reset');
+				$('#forgot-tab .reset-holder').hide();
+				$('#forgot-tab .confirm-reset').show();
+			}else {
+				$('#forgot-form .btn-primary').button('reset');
+				$('#forgot-tab h3').after('<div class="alert alert-danger error-msg"><div>' + msg + '</div></div>');			
+			}
+		},
+		error:function(error) {
+			$('#forgot-form .btn-primary').button('reset');
+			_showReqFailModal();
+		}		
+	});
+}
+
+/**********************************************************************************
+|
+|	On close login/signup modal
+|
+**********************************************************************************/
+
+$('#login-signup-modal').on('hidden.bs.modal',function(e) {
+
+	// Hide signup confirmation
+	$('#signup-tab .confirm-email').hide();
+	$('#signup-tab input[name="signupEmail"]').val('');
+	$('#signup-tab input[name="password"]').val('');
+	$('#signup-tab .create-acct').show();
+
+	// Hide forgot password confirmation
+	$('#forgot-tab .confirm-reset').hide();
+	$('#forgot-tab input[name="email"]').val('');
+	$('#forgot-tab .reset-holder').show();
+
+});
+
+
+/**********************************************************************************
+|
+|	Local storage for infinite scroll position
+|
+**********************************************************************************/
+
+function _localStorage() {
+	try {
+		var storage = window.localStorage,
+			x = '__storage_test__';
+		storage.setItem(x, x);
+		storage.removeItem(x);
+		return true;
+	}
+	catch(e) {
+		return false;
+	}
+}
+
+history.scrollRestoration = 'manual';
+
+$(window).bind('pageshow', function(event) {
+	if (event.originalEvent.persisted) {
+		window.location.reload();
+	}
+});
+
+/**********************************************************************************
+|
+|	Search submit
+|
+**********************************************************************************/
+
+$(document).on('submit','#main-search-form',function() {
+	searchPhotos($('input[name="main-search"]').val());
+	return false;
+});
+
+$(document).on('submit','#sidebar-search-form',function() {
+	searchPhotos($('input[name="side-search"]').val());
+	return false;
+});
+
+$(document).on('submit','#header-search-form',function() {
+	searchPhotos($('input[name="header-search"]').val());
+	return false;
+});
+
+/**********************************************************************************
+|
+|	Search function
+|
+**********************************************************************************/
+
+function searchPhotos(searchVal) {
+	searchVal = $.trim(searchVal).replace(/\s+/g, '-').replace(/\\/g, '%5C').replace(/\//g, '%2F');
+	if(searchVal == '') {
+		return false;
+	}
+	window.location.href = '/search/' + searchVal.toLowerCase() + '/';
+}
+
+/**********************************************************************************
+|
+|	On click favorite
+|
+**********************************************************************************/
+
+$(document).on('click','.favo',function(e) {
+	e.preventDefault();
+	if (!navigator.cookieEnabled) {
+		alert('Please enable browser cookies to favorite photos.');
+		return false;
+	}
+	if ($(this).hasClass('loading')) {
+		return false;
+	}
+	var el = $(this);
+	var imgId = $(this).attr('data-imgid');
+	favoritePhoto(el,imgId);
+	return false;
+});
+
+/**********************************************************************************
+|
+|	Favorite function
+|
+**********************************************************************************/
+
+function favoritePhoto(el,imgId) {
+
+	var loadingCircle = setTimeout(function(){
+		el.addClass('loading');
+	}, 500);
+
+	var addFav = true;
+
+	if (el.hasClass('faved')) {
+		addFav = false;
+	}
+
+	var favData = {
+		addAction: addFav,
+		imgId : imgId,
+		_csrf: $('meta[name="ctoken"]').attr('content')
+	}
+
+	var ajaxPost = $.ajax({
+		type: 'POST',
+		url: '/api-favorite',
+		data: $.param(favData),
+		dataType: 'json',
+		success:function(ret) {
+			var code = ret.code ;
+			var msg = ret.message ;
+			if(code == '0000') {
+				el.toggleClass('faved');
+				clearTimeout(loadingCircle);
+				el.removeClass('loading');
+
+				_saveGrid = $('#main').clone();
+				_saveGrid.find('.title-container').remove();
+				_saveGrid = _saveGrid.html();
+			}else {
+				var errorMsg = 'Please log in to remove image from your favorites.';
+				if (addFav) {
+					errorMsg = 'Please log in to add image to your favorites.';
+				}
+				$('#login-tab h3').after('<div class="alert alert-danger error-msg">' + errorMsg + '</div>');
+				$('#login-signup-modal .tab-pane').removeClass('active');
+				$('#login-signup-modal #login-tab').addClass('active');
+				$('#login-signup-modal').modal('show');		
+			}
+		},
+		error:function(error) {
+			_showReqFailModal();
+		}		
+	});
+}
+
+var _saveGrid;
+var _photosGridLoaded = [];
+
+if ($('.photo-grid-item').length) {
+	_photosGrid = true;
+	_saveGrid = $('#main').clone();
+	_saveGrid.find('.title-container').remove();
+	_saveGrid = _saveGrid.html();
+}
+
+$(window).on('beforeunload', function() {
+	if (_photosGrid) {
+		var stateObj = {
+			scrollTop: $(window).scrollTop(),
+			photoGrid: _photosGridLoaded
+		}
+		history.replaceState(stateObj, null, null);
+	}
+});
+
+if (history.state) {
+	_photosGridLoaded = history.state.photoGrid;
+	var requests = [];
+
+	if (_photosGridLoaded.length > 0) {
+		_loadingPhotos = true;
+		for(i = 0; i < _photosGridLoaded.length; i++) {
+			requests.push($.getJSON(_photosGridLoaded[i]));
+		}
+
+		$.when.apply($, requests).done(function() {
+			if (requests.length == 1) {
+				renderPhotosGrid(arguments[0]);
+			}
+			else {
+				$.each(arguments, function(index, responseData) {
+					renderPhotosGrid(responseData[0]);
+				});
+			}
+			$(window).scrollTop(history.state.scrollTop);
+		});
+	}
+}
+
+/**********************************************************************************
+|
+|	Initialize grid if grid is present
+|
+**********************************************************************************/
+
+if ($('.photo-grid-item').length) {
+	var options = {minMargin: 15, maxMargin: 20, itemSelector: '.photo-grid-item'};
+	$('#main').rowGrid(options);
+}
