@@ -1,5 +1,11 @@
+/* font-family: 'Alegreya SC', serif;
+font-family: 'Bungee Spice', cursive;
+font-family: 'Dancing Script', cursive;
+font-family: 'Foldit', cursive;
+font-family: 'Playfair Display', serif; */
 body{
     background-image: linear-gradient(to bottom, rgb(212, 178, 183),rgb(155, 81, 93),rgb(83, 43, 49));
+    font-family: 'Alegreya SC', serif;
 }
 header{
     text-align: center;
@@ -64,6 +70,7 @@ hr{
     max-width: 500px;
 }
 #content{
+    font-family: 'Roboto Serif', serif;
     font-size: 2.8em;
     font-weight: normal;
     line-height: 1.25em;

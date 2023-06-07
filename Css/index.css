@@ -1,0 +1,273 @@
+html {
+    scroll-behavior: smooth;
+  }
+
+body{
+    /* background-image: linear-gradient(to bottom, rgb(212, 178, 183),rgb(211, 154, 164),rgb(213, 179, 183)); */
+    background-image: rgb(212, 178, 183);
+    font-family: 'Alegreya SC', serif;
+    height: 100%;
+    width: 100%;
+}
+header{
+    color: black;
+    text-align: center;
+    margin:auto;
+    width: auto;
+    margin-bottom: 0.5em;
+    padding: 1em;
+    /* background-color: rgb(212, 178, 183); */
+    background-color: rgb(55, 53, 53);
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: 0.2s;
+    border-bottom: 2px solid #696868  
+    
+}
+h1{
+    font-size: 2.5em;
+    font-weight: bold;
+    /* color:black; */
+    color:rgb(243, 239, 239);
+    text-align: center;
+    line-height: 0.8em;
+    letter-spacing: 0.01em;
+    padding: 0.2em;
+}
+nav{
+    font-size: 2em;
+    color: white;
+    font-weight: bold;
+    line-height: 1.25em;
+    letter-spacing: 0.08em;
+    margin-top: 0.3em;
+    margin-bottom: 0.04em;
+    
+    
+}
+.links{
+    /* color:black; */
+    color:rgb(247, 243, 243);
+    padding: 0.8em;
+    text-decoration: none;
+
+}
+.links:hover{
+    color: rgb(245, 138, 154);
+
+
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+.fade-in-image{
+     animation: fadeIn 5s; 
+        }  
+hr{
+    color: rgb(59, 15, 22);
+    size: 5px solid;
+}
+
+h4{
+    text-align: center;
+
+}
+#projects{
+    font-size: 1.76em;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: rgb(245, 138, 154);
+}
+.card{
+    margin-top: 20%;
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+}
+#pro1{
+    margin-top: 8%;
+    
+}
+#mm{
+    font-size: 1.76em;
+    font-weight: bold;
+
+}
+.section1{
+    display: flex;
+    justify-content: center;
+    margin-top: 10em;
+    margin-left: 5em;
+
+
+}
+#image{
+    max-width: 500px;
+    box-shadow: 7px 7px  rgb(223, 181, 188);
+}
+#content{
+    /* font-family: 'Alegreya SC', serif; */
+    font-size: 2.3em;
+    font-weight: normal;
+    line-height: 1.2em;
+    letter-spacing: 0.02em;
+    margin-top: 0.8em;
+    margin-left: 3em;
+    margin-right: 1.5em;
+}
+@keyframes slide-up{
+    from{
+        opacity: 0.2;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.text-box{
+    animation: slide-up 2s;
+}
+h2{
+    text-align: center;
+}
+.h2{
+    font-size: 1.2em;
+    font-weight: bold;
+    color:black;
+    align-items:  center;
+    text-decoration: none;
+    line-height: 0.8em;
+    letter-spacing: 0.01em;
+    padding: 0.2em;
+    text-decoration: underline;
+    text-decoration-color: rgb(245, 138, 154);
+
+}
+
+h3{
+    text-align: center;
+}
+
+.h3{
+    font-size: 1.1em;
+    font-weight: bold;
+    color:black;
+    align-items:  center;
+    text-decoration: none;
+    line-height: 0.8em;
+    letter-spacing: 0.01em;
+    padding: 0.2em;
+    text-decoration: underline;
+    text-decoration-color: rgb(245, 138, 154);
+}
+
+
+
+.media{
+    font-size: 0.3em;
+    text-align: center;
+    padding: 0.3em;
+}
+.fa-brands{
+    color: black;
+    padding: 0.6em;
+
+}
+.fa-brands:hover{
+    color: rgb(245, 138, 154);
+}
+#copyrights{
+    text-align: center;
+    font-size: 1.30em;
+    color: black;
+}
+.cards-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+@media only screen and (max-width: 420px) {
+    h1{
+        font-size: 1em;
+        font-weight: bold;
+        color:black;
+        text-align: center;
+        line-height: 0.2em;
+        letter-spacing: 0.01em;
+        padding: 0.1em;
+    }
+    
+    .section1{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 7em;
+        margin-left: 1em;
+        margin-right: 1em;
+        
+    }
+    #image{
+        width: 50%;
+        align-items: center;
+    }
+    #content{
+        width: 100%;
+        text-align:center;
+        justify-content: center;
+        font-size: 1em;
+        margin-top: 1.5em;
+    }
+    #mt{
+        width: 30%;
+    }
+    .logos{
+        font-size: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 2.5em;
+    }
+    .section{
+        font-size: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 2.5em;
+    }
+
+    #navigation{
+        font-size: 15px;
+         margin-top: 1.5em;
+         width: 100%;
+    }
+
+    #name{
+        width: 100%;
+        font-size: 20px;
+        color:rgb(243, 239, 239);
+        font-weight: bolder; 
+    }    
+
+    .media{
+        margin-left: 1em;
+        margin-right: 1em;
+        font-size: 0.2em;
+    }
+
+    #copyrights{
+        margin-left: 1em;
+        margin-right: 1em;
+        font-size: 0.9em;
+    }
+    }
+
