@@ -463,6 +463,7 @@ li{
     }
     .typewriter{
         margin-top: 5em;
+        min-height: 50px;
         font-size: 10px;
     }
 
