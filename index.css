@@ -329,12 +329,13 @@ h5{
 i{
     font-size: 6vw;
 }
-h6{
+.h6{
     text-align: center;
     font-size: 1.80em;
     color: rgb(70, 8, 49);
     font-weight: bold;
     text-decoration:underline;
+    
     
 }
 .non-tech{
@@ -352,6 +353,20 @@ li{
     list-style-type: none;
     text-align: left;
 }
+.qual{
+    margin-top: 3em;
+    text-align: center;
+    
+}
+.cert{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-family: 'Roboto Serif', serif;
+    margin-top: 3em;
+    margin-right: 2em;
+    font-size: 1.80em;
+}
 
 .section{
     display: flex;
@@ -365,10 +380,12 @@ li{
 .profile{
     margin-top: 1em;
     font-size: 1.76em;
+    font-family: 'Roboto Serif', serif;
     
 
-}f
+}
 .details{
+    font-family: 'Roboto Serif', serif;
     font-size: 1.8em;
     display: flex;
     flex-direction: column;
@@ -384,6 +401,7 @@ li{
     width: 30%;
     height: 20%;
     background-color:rgb(54, 43, 43);
+    margin-left: 0.2em;
 }
 #btn:hover{
     background-color: gray;
@@ -485,5 +503,26 @@ li{
         margin-right: 1em;
         font-size: 0.9em;
     }
+    .cert{
+        display: flex;
+        flex-direction: column;
+        margin-left: 1.5em;
+        font-size: 1.2em;
+    }
+    }
+    @media only screen and (min-width: 422px) {
+    .section1{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+       } 
+
+    }
+    @media only screen and (min-width: 992px) {
+        .section1{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+           }  
     }
 
